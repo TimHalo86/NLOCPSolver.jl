@@ -1,0 +1,13 @@
+name = "NLOCPSolver"
+uuid = "2b7102f8-7ef2-4840-99f6-1948abcf9064"
+authors = ["Hanyu Gan"]
+version = "1.0.0-DEV"
+
+[compat]
+julia = "1.6.7"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
