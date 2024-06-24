@@ -1,6 +1,7 @@
 using NLOCPSolver
 using Test
 
-@testset "NLOCPSolver.jl" begin
+@testset "bicycleTests" begin
     # Write your tests here.
+    include("bicycleTests.jl")
 end
