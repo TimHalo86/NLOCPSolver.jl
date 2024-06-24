@@ -1,4 +1,4 @@
-push!(LOAD_PATH, ".")
+isdefined(Base, :__precompile__) && __precompile__()
 module NLOCPSolver
 
 using JuMP
