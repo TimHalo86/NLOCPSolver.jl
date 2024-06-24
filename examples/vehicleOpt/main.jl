@@ -1,4 +1,6 @@
-include("../../src/utils.jl")
+# include("../../src/utils.jl")
+# include("../../src/NLOCPSolver.jl")
+using NLOCPSolver
 include("bicycleModel.jl")
 include("parameters.jl")
 using Plots
@@ -18,7 +20,9 @@ user_options = ()
 OCPdef!(ocp, OCPForm)
 xpos = ocp.p.x[:, 1];
 y = ocp.p.x[:, 2]; dδf = ocp.p.u[:, 2]; ax = ocp.p.u[:, 1]; ux = ocp.p.x[:, 6]; δf = ocp.p.x[:, 7];
-obj = @expression(ocp.f.mdl, sum((0.05 * (y[j] - 5 - sin(xpos[j]))^2 + 2 * dδf[j]^2 + 0.2 * ax[j]^2 + 0.2 * ux[j]^2 + 1 * δf[j]^2) * ocp.f.TInt[j-1] for j in 2:ocp.f.Np))
+obs_cons = @constraint(ocp.f.mdl, [i=1:ocp.s.states.pts], 36 <= ((xpos[i] - 30).^2 + (y[i] - 2).^2));
+obj = @expression(ocp.f.mdl, sum((0.05 * (y[j])^2 + 2 * dδf[j]^2 + 0.2 * ax[j]^2 + 0.2 * (ux[j] - 13)^2 + 1 * δf[j]^2) * ocp.f.TInt[j-1] for j in 2:ocp.f.Np))
 @objective(ocp.f.mdl, Min, obj)
 @time OptSolve!(ocp)
-plot(ocp.r.X[:, 1], ocp.r.X[:, 2])
+plot(ocp.r.X[:, 1], ocp.r.X[:, 2], aspect_ratio = 1)
+# plot(ocp.r.X[:, 6])

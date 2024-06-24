@@ -1,7 +1,6 @@
 include("../../src/utils.jl")
 include("VehicleModel.jl")
 include("racing_utils.jl")
-include("../../src/OCPSolver.jl")
 using Plots
 using MAT
 using Interpolations
