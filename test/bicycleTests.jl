@@ -81,5 +81,8 @@ obs_cons = @constraint(ocp.f.mdl, [i=1:ocp.s.states.pts], 36 <= ((xpos[i] - 30).
 obj = @expression(ocp.f.mdl, sum((0.05 * (y[j] - sin(xpos[j]))^2 + 2 * dδf[j]^2 + 0.2 * ax[j]^2 + 0.2 * (ux[j] - 13)^2 + 1 * δf[j]^2) * ocp.f.TInt[j-1] for j in 2:ocp.f.Np))
 @objective(ocp.f.mdl, Min, obj)
 @time OptSolve!(ocp)
-plot(ocp.r.X[:, 1], ocp.r.X[:, 2], aspect_ratio = 1)
-# plot(ocp.r.X[:, 1], ocp.r.X[:, 3])
+# plot(ocp.r.X[:, 1], ocp.r.X[:, 2], aspect_ratio = 1)
+# # plot(ocp.r.X[:, 1], ocp.r.X[:, 3])
+
+@test size(ocp.r.X)==(81, 7);
+
