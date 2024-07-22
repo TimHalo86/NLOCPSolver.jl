@@ -40,8 +40,8 @@ function bicycleModel_expr(states, controls, parameters)
     dstates[1]         = ux*cos(ψ) - v*sin(ψ) 
     dstates[2]         = ux*sin(ψ) + v*cos(ψ)  
     dstates[3]         = (Fyf+Fyr)/m - ux*r  
-    dstates[4]         = r 
-    dstates[5]         = (Fyf*la-Fyr*lb)/Izz 
+    dstates[4]         = (Fyf*la-Fyr*lb)/Izz 
+    dstates[5]         = r
     dstates[6]         = ax 
     dstates[7]         = dδf 
     
