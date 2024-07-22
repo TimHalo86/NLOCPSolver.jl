@@ -29,18 +29,41 @@ function bicycleModel_expr(states, controls, parameters)
     αf = δf - (v+la*r)/ux # Front slip angle
     αr = -(v-lb*r)/ux # Rear slip angle
 
-    Fyf = MagicFormula(αf, Fzf, mu) # Front lateral force
-    Fyr = MagicFormula(αr, Fzr, mu) # Rear lateral force
+    Fyf = MagicFormula(αf, Fzf, 1) # Front lateral force
+    Fyr = MagicFormula(αr, Fzr, 1) # Rear lateral force
 
-    dstates = Vector{Any}(undef,7)
+    dstates = Vector{Any}(undef,14)
     dstates[1]         = ux*cos(ψ) - v*sin(ψ) 
     dstates[2]         = ux*sin(ψ) + v*cos(ψ)  
     dstates[3]         = (Fyf+Fyr)/m - ux*r  
-    dstates[4]         = (Fyf*la-Fyr*lb)/Izz
-    dstates[5]         = r 
+    dstates[4]         = (Fyf*la-Fyr*lb)/Izz 
+    dstates[5]         = r
     dstates[6]         = ax 
     dstates[7]         = dδf 
     
+    xa = states[8]
+    ya = states[9]
+    va = states[10]
+    ra = states[11]
+    ψa = states[12]
+    uxa = states[13]
+    δfa = states[14]
+    axa = controls[3]
+    dδfa = controls[4]
+    Fzfa = m*g*la/(la+lb) - m*h/(la+lb)*axa # Front axle load
+    Fzra = m*g*lb/(la+lb) + m*h/(la+lb)*axa # Rear axle load
+    αfa = δfa - (va+la*ra)/uxa # Front slip angle
+    αra = -(va-lb*ra)/uxa # Rear slip angle
+    Fyfa = MagicFormula(αfa, Fzfa, 0.1) # Front lateral force
+    Fyra = MagicFormula(αra, Fzra, 0.1) # Rear lateral force
+    dstates[8]         = uxa*cos(ψa) - va*sin(ψa) 
+    dstates[9]         = uxa*sin(ψa) + va*cos(ψa)  
+    dstates[10]         = (Fyfa+Fyra)/m - uxa*ra  
+    dstates[11]         = (Fyfa*la-Fyra*lb)/Izz
+    dstates[12]         = ra 
+    dstates[13]         = axa 
+    dstates[14]         = dδfa 
+
     return dstates
 end
 
